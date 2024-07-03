@@ -1,9 +1,16 @@
-import Image from "next/image";
+"use client"
+import React from 'react'
+import Home from './home'
+import Provider from './provider'
 
-export default function Home() {
+const Page = () => {
   return (
     <div>
-      Home Page
+      <Provider>
+      <Home/>
+      </Provider>
     </div>
-  );
+  )
 }
+
+export default Page

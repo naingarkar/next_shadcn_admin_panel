@@ -10,6 +10,8 @@ import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { z } from 'zod'
 import { useFormStatus } from 'react-dom'
+import { signIn } from 'next-auth/react'
+import { redirect } from 'next/navigation'
 
 const LoginForm = () => {
     const [loading, setLoading] = useState(false);
@@ -24,7 +26,14 @@ const LoginForm = () => {
 
     const onSubmit = (data: z.infer<typeof LoginSchema>) => {
         setLoading(true);
-        console.log(data);
+        signIn("credentials", { redirect: false })
+        .then((res) => {
+            if(res?.status == 200) {
+                redirect("/dashboard");
+            }else{
+                alert("error");
+            }
+        });
     }
 
     const { pending } = useFormStatus();
